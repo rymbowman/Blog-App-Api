@@ -10,7 +10,10 @@ import commentsRouter from "./routes/comments.js";
 dotenv.config();
 // app
 const app = express();
-const corsOptions = { origin: "http://localhost:5173", Credentials: true };
+const corsOptions = {
+  origin: "https://platform-blogging-app.onrender.com",
+  credentials: true,
+};
 
 // middleware
 app.use(express.json());
