@@ -11,7 +11,7 @@ dotenv.config();
 // app
 const app = express();
 const corsOptions = {
-  origin: "https://platform-blogging-app.onrender.com",
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 };
 
