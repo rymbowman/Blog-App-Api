@@ -29,9 +29,13 @@ app.use("/api/posts", postsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api", commentsRouter);
 
-// Optionally, redirect to the frontend's deployed URL for non-API routes
+// Serve static files from the frontend dist folder
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, "../Blog-App-Client/dist")));
+
+// Serve React frontend for all other requests
 app.get("*", (req, res) => {
-  res.redirect(process.env.FRONTEND_URL);
+  res.sendFile(path.join(__dirname, "../Blog-App-Client/dist", "index.html"));
 });
 
 // server
