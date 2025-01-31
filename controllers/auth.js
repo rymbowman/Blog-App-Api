@@ -82,6 +82,7 @@ export const register = async (req, res) => {
     res.status(201).send({ token, user: newUser.rows[0] });
   } catch (error) {
     console.error("Error during registration:", error.message);
+    console.error("Stack trace:", error.stack);
     res.status(500).send({ error: "Database connection error" });
   }
 };
