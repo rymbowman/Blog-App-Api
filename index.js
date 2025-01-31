@@ -30,8 +30,11 @@ app.use("/api/auth", authRouter);
 app.use("/api", commentsRouter);
 
 // Serve static files from the frontend dist folder
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.join(__dirname, "../Blog-App-Client/dist")));
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const staticMiddleware = express.static(
+  path.join(__dirname, "../Blog-App-Client/dist")
+);
+app.use(staticMiddleware);
 
 // Serve React frontend for all other requests
 app.get("*", (req, res) => {
