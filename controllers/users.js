@@ -30,14 +30,14 @@ export const getUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
   const { firstname, lastname, email, username, password, profile_img, bio } =
     req.body;
 
   try {
     const updateUser = await Pool.query(
       "UPDATE users SET firstname = $1, lastname = $2, email = $3, username = $4, password = $5, profile_img = $6, bio = $7 WHERE id = $8 RETURNING *",
-      [firstname, lastname, email, username, password, profile_img, bio, id]
+      [firstname, lastname, email, username, password, profile_img, bio, userId]
     );
     if (updateUser.rows.length === 0) {
       return res.status(404).send({ error: "User not found" });
