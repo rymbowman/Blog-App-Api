@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import Pool from "../db.js";
 import { sendEmail } from "../utils/sendEmail.js";
 
