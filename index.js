@@ -38,6 +38,7 @@ app.use(
 
 // The "catchall" handler: for any request that doesn't match one above, send back index.html
 app.get("*", (req, res) => {
+  console.log("Handling request for:", req.originalUrl);
   res.sendFile(path.join(__dirname, "../Blog-App-Client/dist/index.html"));
 });
 
