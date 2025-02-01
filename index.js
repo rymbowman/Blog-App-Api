@@ -34,26 +34,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Blog App API");
 });
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, "../../Blog-App-Client/dist")));
-
-// The "catchall" handler: for any request that doesn't match one above, send back index.html
-app.get("*", (req, res) => {
-  console.log("Handling request for:", req.originalUrl);
-  const filePath = path.join(
-    __dirname,
-    "../../Blog-App-Client/dist/index.html"
-  );
-  console.log("Sending file:", filePath);
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      console.error("Error sending file:", err);
-      res.status(500).send("Error sending file");
-    }
-  });
+// The "catchall" handler: for any request that doesn't match one above, send back a 404 response
+app.use((req, res, next) => {
+  console.log(`Request for ${req.originalUrl} did not match any routes`);
+  res.status(404).json({ message: "Not Found" });
 });
 
 // server
