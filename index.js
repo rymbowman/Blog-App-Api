@@ -32,7 +32,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, "../Blog-App-Client/dist")));
+app.use(
+  express.static(path.join(__dirname, "../Blog-App-Client/dist/index.html"))
+);
 
 // The "catchall" handler: for any request that doesn't match one above, send back index.html
 app.get("*", (req, res) => {
