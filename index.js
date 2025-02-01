@@ -4,7 +4,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
 import usersRouter from "./routes/users.js";
 import postsRouter from "./routes/posts.js";
 import authRouter from "./routes/auth.js";
@@ -28,6 +27,17 @@ app.use("/api/users", usersRouter);
 app.use("/api/posts", postsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api", commentsRouter);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "../Blog-App-Client/dist")));
+
+// The "catchall" handler: for any request that doesn't match one above, send back index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Blog-App-Client/dist/index.html"));
+});
 
 // server
 const port = process.env.PORT || 5000;
