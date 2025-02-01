@@ -28,18 +28,16 @@ app.use("/api/posts", postsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api", commentsRouter);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Default route
+app.get("/", (req, res) => {
+  console.log("Received request for /");
+  res.send("Welcome to the Blog App API");
+});
 
-// Serve static files from the React app
-app.use(
-  express.static(path.join(__dirname, "../Blog-App-Client/dist/index.html"))
-);
-
-// The "catchall" handler: for any request that doesn't match one above, send back index.html
-app.get("*", (req, res) => {
-  console.log("Handling request for:", req.originalUrl);
-  res.sendFile(path.join(__dirname, "../Blog-App-Client/dist/index.html"));
+// The "catchall" handler: for any request that doesn't match one above, send back a 404 response
+app.use((req, res, next) => {
+  console.log(`Request for ${req.originalUrl} did not match any routes`);
+  res.status(404).json({ message: "Not Found" });
 });
 
 // server
