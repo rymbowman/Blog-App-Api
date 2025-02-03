@@ -2,8 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import path from "path";
-import { fileURLToPath } from "url";
 import usersRouter from "./routes/users.js";
 import postsRouter from "./routes/posts.js";
 import authRouter from "./routes/auth.js";
@@ -32,6 +30,10 @@ app.use("/api", commentsRouter);
 app.get("/", (req, res) => {
   console.log("Received request for /");
   res.send("Welcome to the Blog App API");
+});
+
+app.get("/write", (req, res) => {
+  res.send("<h1>Write New Blog Post</h1>"); // Or render a template
 });
 
 // The "catchall" handler: for any request that doesn't match one above, send back a 404 response
