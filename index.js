@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import Pool from "db.js";
 import usersRouter from "./routes/users.js";
 import postsRouter from "./routes/posts.js";
 import authRouter from "./routes/auth.js";
@@ -27,7 +28,7 @@ app.use("/api/auth", authRouter);
 app.use("/api", commentsRouter);
 
 // Test database connection
-pool.connect((err, client, release) => {
+Pool.connect((err, client, release) => {
   if (err) {
     return console.error("Error acquiring client", err.stack);
   }
