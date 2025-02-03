@@ -26,6 +26,25 @@ app.use("/api/posts", postsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api", commentsRouter);
 
+// Test database connection
+pool.connect((err, client, release) => {
+  if (err) {
+    return console.error("Error acquiring client", err.stack);
+  }
+  client.query("SELECT NOW()", (err, result) => {
+    release();
+    if (err) {
+      return console.error("Error executing query", err.stack);
+    }
+    console.log("Database connected:", result.rows);
+  });
+});
+
+// Add a simple route for the root URL
+app.get("/", (req, res) => {
+  res.send("Welcome to the Blog App API");
+});
+
 // server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
