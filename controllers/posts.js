@@ -1,10 +1,10 @@
 import Pool from "../db.js";
 
 export const getPosts = async (req, res) => {
-  const { user_id } = req.query;
+  const { userId } = req.query;
   try {
     const posts = await Pool.query("SELECT * FROM posts WHERE user_id = $1", [
-      user_id,
+      userId,
     ]);
     res.status(200).send(posts.rows);
   } catch (error) {
