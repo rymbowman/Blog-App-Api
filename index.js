@@ -26,20 +26,19 @@ app.use("/api/posts", postsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api", commentsRouter);
 
-// Default route
-app.get("/", (req, res) => {
-  console.log("Received request for /");
-  res.send("Welcome to the Blog App API");
+// Serve static files from the React app
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, "../Blog-App-Client/dist")));
+
+// Test route to check if the file path is correct
+app.get("/test", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Blog-App-Client/dist/index.html"));
 });
 
-app.get("/write", (req, res) => {
-  res.send("<h1>Write New Blog Post</h1>"); // Or render a template
-});
-
-// The "catchall" handler: for any request that doesn't match one above, send back a 404 response
-app.use((req, res, next) => {
-  console.log(`Request for ${req.originalUrl} did not match any routes`);
-  res.status(404).json({ message: "Not Found" });
+// The "catchall" handler: for any request that doesn't match one above, send back index.html
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Blog-App-Client/dist/index.html"));
 });
 
 // server
